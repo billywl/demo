@@ -12,25 +12,33 @@
  </head>
 
  <body>
- <textarea id="myck" class="ckeditor">
- </textarea>
-
-
-  <textarea id="myck1" >
+ <textarea name="myck1">
  </textarea>
  <script>
 		//使用在线编辑器的的ckeditor类的replace方法替换textarea
-		CKEDITOR.replace('myck1');
+		CKEDITOR.replace('myck1',{
+			//自定义配置,不需要使用config关键字,不能用=赋值
+			//直接使用 冒号,每行以逗号结束
+			width:500,
+			height:300,
+			uiColor:'green'    //最后以行没有逗号结束
+		});
+
 </script>
 
 
-<textarea id="myck2">
+<textarea name="myck2">
 </textarea>
 <script>
-	//使用jQuery操作：先找到要替换的元素myck2，然后再调用jquery.js接口所提供的replace方法
-	//jquery：$('要寻找的元素')，通过id进行查找$('#id值')
-	$('#myck2').ckeditor();
-</script>
+	//使用在线编辑器CKEDITOR类的replace方法替换textarea
+	//replace方法有第二个参数，用来进行客户化配置，第二个参数是使用{}来控制
+	CKEDITOR.replace('myck2',{
+		//自定义配置
 
+		//加载自定义配置文件
+		customConfig: 'config_user.js'		//配置文件的路径是相对CKeditor.js
+	
+	});
+	</script>	
  </body>
 </html>
