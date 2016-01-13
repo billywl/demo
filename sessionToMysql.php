@@ -11,7 +11,7 @@
 		$link= mysqli_connect('localhost','root','root');
 		$link->query('set names utf8');
 		$link->query('use session');
-		//echo __FUNCTION__,'<br/>';
+		echo __FUNCTION__,'<br/>';
 	}
 	
 	//2.	关闭session
@@ -24,14 +24,15 @@
 	
 	//3.	读取session
 	function sess_read($sess_id){
+		echo __FUNCTION__,'<br/>';
 		//从数据库读取数据
 		//echo $sess_id;		//session系统提供
 		//根据sessionid获取数据
-		$query = "select * from session where sess_id = '{$sess_id}'";
+	//	$query = "select * from session where sess_id = '{$sess_id}'";
 	
 		//在读数据的时候要过滤到过期的数据
-// 		$expire = time() - ini_get('session.gc_maxlifetime');
-// 		$sql = "select * from session where sess_id = '{$sess_id}' and sess_expire >= '{$expire}'";
+ 		$expire = time() - ini_get('session.gc_maxlifetime');
+		$query = "select * from session where sess_id = '{$sess_id}' and sess_expire >= '$expire'";
 		global $link;
 
 //		var_dump($link);
@@ -41,14 +42,12 @@
 		if($sess){
 			//得到一个序列号化后的字符串
 			//要进行反序列化，read，只负责读取数据，不负责加工数据
-			echo $sess['sess_info'];
-			echo "hah";
+/* 			echo $sess['sess_info'];
+			echo "hah"; */
 			return $sess['sess_info'];
 		}
 	
-	
-	//	echo __FUNCTION__,'<br/>';
-// 		unset($link);
+
 	}
 	
 	//4.	写入session
@@ -56,18 +55,17 @@
 		//向数据库写入数据
 		//echo $sess_id,$sess_info;
 		//获取时间
-		global $link;
+
 		$link= mysqli_connect('localhost','root','root');
 		$link->query('set names utf8');
 		$link->query('use session');
+		var_dump($link);
 
-
-		//$time = time();
-		$query = "insert into session values('{$sess_id}','{$sess_info}')";
-		echo $query;
-		$link->query($query);
+		$time = time();
+		$query = "replace into session values('$sess_id','$sess_info','$time')";
+		echo __FUNCTION__,'<br/>';
+		return $link->query($query);
 	
-		//echo __FUNCTION__,'<br/>';
 	}
 	
 	//5.	销毁session
@@ -75,19 +73,22 @@
 /* 		//删除数据库数据
 		$sql = "delete from session where sess_id = '{$sess_id}'";
 		return mysql_query($sql); */
+		global $link;
+		var_dump($link);
 		echo __FUNCTION__,'<br/>';
 	}
 	
 	//6.	回收session
 	function sess_gc(){
-/* 		//从数据库删除过期session数据
+		//从数据库删除过期session数据
 		//判断session是否过期，过期的删除
 		$expire = ini_get('session.gc_maxlifetime');
 		$expire = time() - $expire;						//得到最迟的时间，在$expire之前的数据都是过期的
+		global $link;
 	
-		$sql = "delete from session where sess_expire < '{$expire}'";
-		return mysql_query($sql); */
+		$query= "delete from session where sess_expire < '{$expire}'";
 		echo __FUNCTION__,'<br/>';
+		return $link->query($query);
 	}
 	
 	//使用session_set_save_handler()注册session（修改session机制）之前
@@ -100,11 +101,11 @@
 	session_start();
 	
 	//加入session数据
-/*  	$_SESSION['name'] = '你好';
+ 	$_SESSION['name'] = '你好';
  	$_SESSION['age'] = 18;
 	
 	//查看数据
-	var_dump($_SESSION); */
+	//var_dump($_SESSION);
 	//var_dump($link);
 	
 	//删除session
