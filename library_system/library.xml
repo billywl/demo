@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<books>
+	<book id="1" category="c程序设计">
+		<imgpic>images/1.jpg</imgpic>
+		<title>程序设计</title>
+		<author>adam</author>
+		<pubdate>2010-1-11</pubdate>
+		<isbn>2010-1-11</isbn>
+		<price>10.00</price>
+	</book>
+	<book id="2" category="123">
+		<imgpic>123</imgpic>
+		<title>123</title>
+		<author>234234234</author>
+		<pubdate>2323</pubdate>
+		<isbn>2323</isbn>
+		<price>123</price>
+	</book>
+</books>
