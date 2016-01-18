@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Insert title here</title>
+        <style type='text/css'>
+            #red {
+                color: red;
+                font-size: 14px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>html标签演示</h1>
+        {html_table loop=$lamp cols='1' table_attr='style="border:1px #ccc solid;"'}
+		<h2>复选框</h2>
+        <div id='red'>
+            {html_checkboxes name='hobby' values=$values checked=$checked output=$output}
+        </div>
+        <h2>下拉选项</h2>
+        <select name='hobby'>
+            {html_options values=$values selected=$checked output=$output}
+        </select>
+        <h2>单选框</h2>
+        {html_radios name='hobby' values=$values checked='1' output=$output separator='
+        <br>
+        '}
+    </body>
+</html>
