@@ -28,21 +28,14 @@
 		function __construct($arr=array()){
 		
 		
-/* 		 	$this->host=isset($arr['host']) ? $arr['host'] : 'localhost';
+ 		 	$this->host=isset($arr['host']) ? $arr['host'] : 'localhost';
 			$this->port=isset($arr['port']) ? $arr['port'] : '3306';
 			$this->user = isset($arr['user']) ? $arr['user'] : 'root';
 			$this->pass = isset($arr['pass']) ? $arr['pass'] : 'root';
-			$this->dbName = isset($arr['dbName']) ? $arr['dbName'] : 'shop';
+			$this->dbName = isset($arr['dbName']) ? $arr['dbName'] : 'demo';
 			$this->charset = isset($arr['charset']) ? $arr['charset'] : 'utf8';
-			$this->prefix = isset($arr['prefix']) ? $arr['prefix'] : 'sh_'; */
+			$this->prefix = isset($arr['prefix']) ? $arr['prefix'] : ''; 
  
-			$this->host=isset($arr['host']) ? $arr['host'] : $GLOBALS['config']['mysql']['host'];
-			$this->port=isset($arr['port']) ? $arr['port'] : $GLOBALS['config']['mysql']['port'];
-			$this->user = isset($arr['user']) ? $arr['user'] : $GLOBALS['config']['mysql']['user'];
-			$this->pass = isset($arr['pass']) ? $arr['pass'] : $GLOBALS['config']['mysql']['pass'];
-			$this->dbName = isset($arr['dbName']) ? $arr['dbName'] : $GLOBALS['config']['mysql']['dbName'];
-			$this->charset = isset($arr['charset']) ? $arr['charset'] : $GLOBALS['config']['mysql']['charset'];
-			$this->prefix = isset($arr['prefix']) ? $arr['prefix'] : $GLOBALS['config']['mysql']['prefix'];
 
 			//链接数据库
 			$this->connect();
@@ -53,8 +46,8 @@
 			//选择数据库
 			$this->useDbname($this->dbName);
 			
-			//获取当前表的所有字段信息
-			$this->getFields();
+/* 			//获取当前表的所有字段信息
+			$this->getFields(); */
 		}
 		/**
 		 * 连接数据库
@@ -232,6 +225,13 @@
 					$this->fields['_PK']=$field['Field'];
 				}
 			}
+		}
+		
+		/**
+		 * 关闭链接
+		 */
+		public function close(){
+			mysqli_close($this->link);
 		}
 	}
 	

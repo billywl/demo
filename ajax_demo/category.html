@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>分页联动示例</title>
+<script language='javascript' src='public.js'></script>
+<script>
+	//页面载入时创建下拉菜单
+	window.onload = function() {
+		//创建一级下拉菜单
+		createkind();
+		//如果一级下拉菜单变化,创建二级下拉菜单
+		$('c1').onchange = createkind2;
+	};
+
+	//创建一级分类
+	function createkind() {
+		//发送ajax请求，获取所有一级分类信息
+		$.post('category.php', 'cid=0', function(msg) {
+			//循环遍历一级分类的json数组
+			for ( var i = 0; i < msg.length; i++) {
+				//创建一对option元素
+				var op = new Option(msg[i].name, msg[i].id);
+				//将元素添加到第一个下拉列表中
+				$('c1').options.add(op);
+			}
+		}, 'json');
+	}
+
+	//创建二级分类
+	function createkind2() {
+		
+		//清空二级分类原有内容
+		$('c2').length=0;
+		
+		//取出所选一级分类的分类ID
+		var cid = $('c1').value;
+
+		//发送ajax请求，查询所有上级分类为cid的分类信息
+		$.post('category.php', 'cid=' + cid, function(msg) {
+			//遍历json数组，将信息写入到c2下拉列表中
+			for ( var i = 0; i < msg.length; i++) {
+				var op = new Option(msg[i].name, msg[i].id);
+				$('c2').options.add(op);
+			}
+		}, 'json');
+
+	}
+</script>
+</head>
+<body>
+	<select id='c1'>
+		<option value='-1'>请选择</option>
+	</select>
+	<select id='c2'></select>
+</body>
+</html>

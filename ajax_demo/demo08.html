@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>在此处插入标题</title>
+<script language='javascript' src='public_2.js'></script>
+<script>
+	window.onload = function() {
+		//绑定点击事件
+		$('btnOk').onclick = function() {
+			//获取要传递的参数
+			var username = $('username').value;
+			var password = $('password').value;
+			//拼凑要传递的参数字符串
+			var data = 'username=' + username + '&password=' + password;
+			//创建ajax对象
+			var xhr = createXhr();
+			//初始化设置post模式和请求页面
+			xhr.open('post', 'demo08_2.php');
+			//设置请求头
+			xhr.setRequestHeader('Content-Type',
+					'application/x-www-form-urlencoded');
+			//定义状态码改变时调用的回调函数
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					if (xhr.responseText==1) {
+						//初始化输入栏,方便下一次输入
+						$('username').value = '';
+						$('password').value = '';
+						$('password2').value = '';
+						$('res').innerHTML = '录入成功';
+					}else{
+						$('res').innerHTML = xhr.responseText;
+					} 
+
+				}
+			};
+			//ajax想服务器传递对象
+			xhr.send(data);
+		};
+	};
+</script>
+</head>
+<body>
+	用户：
+	<input type='text' id='username' />
+	<hr>
+	密码：
+	<input type='password' id='password' />
+	<hr>
+	确认：
+	<input type='password' id='password2' />
+	<hr>
+	<input type='button' id='btnOk' value='录入' />
+	<span id='res'></span>
+</body>
+</html>
